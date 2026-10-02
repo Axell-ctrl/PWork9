@@ -19,7 +19,7 @@ namespace Практическая_работа__9
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
-            Console.Title = "Практическая работа №8";//задаёт значение в заголовок консоли
+            Console.Title = "Практическая работа №9";//задаёт значение в заголовок консоли
 
             Console.WriteLine("Здравствуйте!");
 
