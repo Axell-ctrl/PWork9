@@ -47,14 +47,28 @@ namespace Практическая_работа__9
                         A[i] = rnd.Next(10, 31);//генерация чисел в массив A с интервалом [10,31)
                         B[i] = rnd.Next(10, 31);//генерация чисел в массив B с интервалом [10,31)
                     }
+                    Console.Write($"\nЭлементы 1 массива:\t");
+                    for (int i = 0; i < A.Length; i++)
+                    {
+                        Console.Write(A[i] + "\t");
+                    }
+
+                    Console.Write($"\nЭлементы 2 массива:\t");
+                    for (int i = 0; i < B.Length; i++)
+                    {
+                        Console.Write(B[i] + "\t");
+                    }
 
                     for (int i = 0; i < C.Length; i++)//перебор массива по индексам элементов, C.Length - кол-во элементов массива C
                     {
                         C[i] = A[i] + B[i];//сложение чисел из массива A и B в массив C
                     }
+                    
+                    Console.Write("\nЭлементы 3 массива:\t");
 
                     for (int i = 0; i < C.Length; i++)
                     {
+                        Console.Write(C[i] + "\t");
                         sum += C[i];//складывается сумма из всех элементов массива C
                     }
 
