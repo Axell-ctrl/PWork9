@@ -1,4 +1,4 @@
-﻿//*****************************************************************************************************************************************************************************
+//*****************************************************************************************************************************************************************************
 //*Практическая работа №9                                                                                                                                                     *
 //*Сделал Егоров Н.Н, группа 2-ИСП                                                                                                                                            *
 //*Задание: объявить массивы, заполнить первые 2 массива случайными числами в диапазоне, сложить их поэлементно в 3 массив, найти среднее арифметическое элементов 3 массива. *
@@ -23,20 +23,17 @@ namespace Практическая_работа__9
 
             Console.WriteLine("Здравствуйте!");
             bool ExitProgram = false;//флаг для выхода из программы
-            try
+            while (true)
             {
-                while (true)
+                try
                 {
                     Console.Write("Введите количество элементов трёх массивов: ");
-                    string input = Console.ReadLine();
-                    if (!Int32.TryParse(input, out int ElementsCount))//если пользователь ввёл буквы или другие символы вместо числа
-                    {
-                        Console.WriteLine("Вы ввели буквы или другие символы вместо числа. Попробуйте ещё раз.");//выводится сообщение об ошибке и просьбой попробовать ещё раз
-                        continue;//начинается следующая итерация цикла
-                    }
+                    int ElementsCount = Int32.Parse(Console.ReadLine());
                     if (ElementsCount <= 0)//если пользователь ввёл число меньшее или равное 0
                     {
-                        Console.WriteLine($"Вы ввели: {ElementsCount}. Количество элементов должно быть больше нуля. Попробуйте ещё раз.");//выводится сообщение об ошибке и просьбой попробовать ещё раз
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Вы ввели некорректное число. Количество элементов должно быть больше нуля. Попробуйте ещё раз.");//выводится сообщение об ошибке и просьбой попробовать ещё раз
+                        Console.ForegroundColor = ConsoleColor.White;
                         continue;//начинается следующая итерация цикла
                     }
                     int[] A = new int[ElementsCount];//создание массива A с количеством элементов, заданным пользователем
@@ -63,19 +60,48 @@ namespace Практическая_работа__9
 
                     SR = sum / ElementsCount;//расчёт среднего арифметического 3 массива (сумма элементов 3 массива разделить на кол-во элементов 3 массива)
                     Console.WriteLine($"\nСреднее арифметическое 3 массива: {SR}");
+                }
+                catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Что-то пошло не так! Ошибка: {fex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Входная строка имела неправильный формат. 
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                catch (OverflowException ofex)//обработчик исключения OverflowException (Значение было недопустимо малым или недопустимо большим для Int32)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Что-то пошло не так! Ошибка: {ofex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Значение было недопустимо малым или недопустимо большим для Int32.
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
+                catch (Exception ex)//обработка исключения Exception (все ошибки в целом)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Что-то пошло не так! Ошибка: {ex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: сообщение об ошибке из ex.Message.
+                    Console.ForegroundColor = ConsoleColor.White;
+                    continue;
+                }
 
-                    while (true)//повторное выполнение цикла с вопросом: Хотите продолжить выполнение? (1-Да/0-Нет).
+
+                while (true)//повторное выполнение цикла с вопросом: Хотите продолжить выполнение? (1-Да/0-Нет).
+                {
+                    try
                     {
                         Console.Write("Хотите продолжить выполнение? (1-Да/0-Нет): ");
-                        string input2 = Console.ReadLine();
-                        if (!Int32.TryParse(input2, out int answer))
-                        {
-                            Console.WriteLine("Вы ввели буквы или другие символы вместо числа. Попробуйте ещё раз.");
-                            continue;
-                        }
+                        int answer = Int32.Parse(Console.ReadLine());
                         if (answer < 0 || answer > 1)//если ответ пользователя меньше 0 или больше 1
                         {
+                            Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Вы ввели некорректное число. Попробуйте ещё раз.");//некорректное число, просит пользователя попробовать ещё раз ввести значение
+                            Console.ForegroundColor = ConsoleColor.White;
                             continue;//продолжает итерацию внутреннего цикла
                         }
                         else//иначе
@@ -88,35 +114,40 @@ namespace Практическая_работа__9
                             break;
                         }
                     }
-                    if (ExitProgram == true)//если выход из программы является истинным
-                        break;//завершается внешний цикл
+                    catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Что-то пошло не так! Ошибка: {fex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Входная строка имела неправильный формат. 
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    catch (OverflowException ofex)//обработчик исключения OverflowException (Значение было недопустимо малым или недопустимо большим для Int32)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Что-то пошло не так! Ошибка: {ofex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Значение было недопустимо малым или недопустимо большим для Int32.
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
+                    catch (Exception ex)//обработка исключения Exception (все ошибки в целом)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Что-то пошло не так! Ошибка: {ex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: сообщение об ошибке из ex.Message.
+                        Console.ForegroundColor = ConsoleColor.White;
+                        continue;
+                    }
                 }
-                Console.ReadKey();
+                if (ExitProgram == true)//если выход из программы является истинным
+                    break;//завершается внешний цикл
+
             }
-            catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message}");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Что-то пошло не так! Ошибка: {fex.Message}");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Входная строка имела неправильный формат. 
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            catch (OverflowException ofex)//обработчик исключения OverflowException (Значение было недопустимо малым или недопустимо большим для Int32)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Что-то пошло не так! Ошибка: {ofex.Message}");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Значение было недопустимо малым или недопустимо большим для Int32.
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            catch (Exception ex)//обработка исключения Exception (все ошибки в целом)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Что-то пошло не так! Ошибка: {ex.Message}");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: сообщение об ошибке из ex.Message.
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+            Console.ReadKey();
         }
     }
 }
