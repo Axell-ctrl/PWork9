@@ -34,54 +34,49 @@ namespace Практическая_работа__9
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Вы ввели некорректное число. Количество элементов должно быть больше нуля. Попробуйте ещё раз.");//выводится сообщение об ошибке и просьбой попробовать ещё раз
                         Console.ForegroundColor = ConsoleColor.White;
-                        continue;//начинается следующая итерация цикла
+                        continue;//переход к следующей итерации цикла
                     }
                     int[] A = new int[ElementsCount];//создание массива A с количеством элементов, заданным пользователем
                     int[] B = new int[ElementsCount];
                     int[] C = new int[ElementsCount];
-                    int sum = 0, SR = 0;
+                    int sum = 0;
+                    double average = 0;
                     Random rnd = new Random();//инициализация генератора случайных чисел
 
-                    for (int i = 0; i < A.Length; i++)//перебор массива по индексам элементов, A.Length - кол-во элементов массива A
-                    {
-                        A[i] = rnd.Next(10, 31);//генерация чисел в массив A с интервалом [10,31)
-                        B[i] = rnd.Next(10, 31);//генерация чисел в массив B с интервалом [10,31)
-                    }
                     Console.Write($"\nЭлементы 1 массива:\t");
                     for (int i = 0; i < A.Length; i++)
                     {
-                        Console.Write(A[i] + "\t");
+                        A[i] = rnd.Next(10, 31);//генерация чисел в массив A с интервалом [10,31)
+                        Console.Write(A[i] + "\t");//вывод массива A по индексам (по очереди)
                     }
 
                     Console.Write($"\nЭлементы 2 массива:\t");
                     for (int i = 0; i < B.Length; i++)
                     {
-                        Console.Write(B[i] + "\t");
+                        B[i] = rnd.Next(10, 31);//генерация чисел в массив B с интервалом [10,31)
+                        Console.Write(B[i] + "\t");//вывод массива B по индексам (по очереди)
                     }
 
-                    for (int i = 0; i < C.Length; i++)//перебор массива по индексам элементов, C.Length - кол-во элементов массива C
-                    {
-                        C[i] = A[i] + B[i];//сложение чисел из массива A и B в массив C
-                    }
-                    
                     Console.Write("\nЭлементы 3 массива:\t");
-
                     for (int i = 0; i < C.Length; i++)
                     {
-                        Console.Write(C[i] + "\t");
+                        C[i] = A[i] + B[i];//поэлементная сумма первых 2 массивов A и B в 3 массив C
+                        Console.Write(C[i] + "\t");////вывод массива C по индексам (по очереди)
                         sum += C[i];//складывается сумма из всех элементов массива C
                     }
 
-                    SR = sum / ElementsCount;//расчёт среднего арифметического 3 массива (сумма элементов 3 массива разделить на кол-во элементов 3 массива)
-                    Console.WriteLine($"\nСреднее арифметическое 3 массива: {SR}");
+                    average = (double)sum / ElementsCount;//расчёт среднего арифметического 3 массива (сумма элементов 3 массива разделить на кол-во элементов 3 массива)
+
+                    //Console.WriteLine("\nСреднее арифметическое 3 массива: {0:0.##}", average);//вывод с 2 знаками после запятой с помощью маски
+                    Console.WriteLine($"\nСреднее арифметическое 3 массива: {Math.Round(average, 2)}");//вывод с 2 знаками после запятой c помощью Math.Round()
                 }
-                catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
+                /*catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
-                }
+                }*/
                 catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -128,13 +123,6 @@ namespace Практическая_работа__9
                             break;
                         }
                     }
-                    catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
                     catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -157,6 +145,7 @@ namespace Практическая_работа__9
                         continue;
                     }
                 }
+
                 if (ExitProgram == true)//если выход из программы является истинным
                     break;//завершается внешний цикл
 
