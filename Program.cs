@@ -22,26 +22,19 @@ namespace Практическая_работа__9
             Console.Title = "Практическая работа №9";//задаёт значение в заголовок консоли
 
             Console.WriteLine("Здравствуйте!");
+            Console.Write("Размерность 3 массивов равна 10.");
             bool ExitProgram = false;//флаг для выхода из программы
+            Random rnd = new Random();//создание генератора случайных чисел
             while (true)
             {
                 try
                 {
-                    Console.Write("Введите количество элементов трёх массивов: ");
-                    int ElementsCount = Int32.Parse(Console.ReadLine());
-                    if (ElementsCount <= 0)//если пользователь ввёл число меньшее или равное 0
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Вы ввели некорректное число. Количество элементов должно быть больше нуля. Попробуйте ещё раз.");//выводится сообщение об ошибке и просьбой попробовать ещё раз
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;//переход к следующей итерации цикла
-                    }
+                    const int ElementsCount = 10;
                     int[] A = new int[ElementsCount];//создание массива A с количеством элементов, заданным пользователем
                     int[] B = new int[ElementsCount];
                     int[] C = new int[ElementsCount];
                     int sum = 0;
                     double average = 0;
-                    Random rnd = new Random();//инициализация генератора случайных чисел
 
                     Console.Write($"\nЭлементы 1 массива:\t");
                     for (int i = 0; i < A.Length; i++)
@@ -70,13 +63,13 @@ namespace Практическая_работа__9
                     //Console.WriteLine("\nСреднее арифметическое 3 массива: {0:0.##}", average);//вывод с 2 знаками после запятой с помощью маски
                     Console.WriteLine($"\nСреднее арифметическое 3 массива: {Math.Round(average, 2)}");//вывод с 2 знаками после запятой c помощью Math.Round()
                 }
-                /*catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
+                catch (IndexOutOfRangeException iorex)//обработчик исключения IndexOutOfRangeException (Индекс находился вне границ массива)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Что-то пошло не так! Ошибка: {iorex.Message} Попробуйте ещё раз.");//Вывод текста с помощью интерполяции: Что-то пошло не так! Ошибка: Индекс находился вне границ массива.
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
-                }*/
+                }
                 catch (FormatException fex)//обработчик исключения FormatException (входная строка имела неправильный формат)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -98,7 +91,6 @@ namespace Практическая_работа__9
                     Console.ForegroundColor = ConsoleColor.White;
                     continue;
                 }
-
 
                 while (true)//повторное выполнение цикла с вопросом: Хотите продолжить выполнение? (1-Да/0-Нет).
                 {
